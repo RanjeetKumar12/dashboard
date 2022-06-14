@@ -1,0 +1,19 @@
+.loginButton {
+  --transition-duration: 0.3s;
+
+  background-color: #154bd6;
+  color: white;
+
+  width: 200px;
+  height: 75px;
+
+  border-width: 0;
+
+  transition-duration: var(--transition-duration);
+}
+
+.loginButton:hover {
+  transition-duration: var(--transition-duration);
+
+  background-color: #152bc6;
+}

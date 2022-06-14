@@ -1,7 +1,9 @@
+import DiscordLogin from './components/DiscordLogin';
+
 const App = () => {
   return (
     <div className="App">
-      Hello World
+      <DiscordLogin />
     </div>
   );
 }
