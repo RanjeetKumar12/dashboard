@@ -8,6 +8,7 @@
   height: 75px;
 
   border-width: 0;
+  border-radius: 15px;
 
   transition-duration: var(--transition-duration);
 }
