@@ -10,7 +10,7 @@ const App = () => {
       <h1>Welcome to Graveyard Dashboard! Please login to use it.</h1>
 
       <DiscordLogin
-        onAttemptedLogin={sessionId => {
+        onLogin={sessionId => {
           setCookie('session-id', sessionId);
         }}
       />

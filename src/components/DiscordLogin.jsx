@@ -1,7 +1,7 @@
 import React from 'react';
 import './DiscordLogin.css';
 
-const DiscordLogin = ({ onAttemptedLogin }) => {
+const DiscordLogin = ({ onLogin }) => {
   return (
     <button
       className='loginButton'
@@ -21,7 +21,7 @@ const DiscordLogin = ({ onAttemptedLogin }) => {
 
         window.addEventListener('message', event => {
           if (event.data.type === 'discordOAuthLoggedIn') {
-            onAttemptedLogin(event.data.sessionId);
+            onLogin(event.data.sessionId);
           }
         });
       }}
