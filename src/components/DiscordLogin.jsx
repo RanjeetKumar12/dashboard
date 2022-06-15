@@ -1,7 +1,7 @@
 import React from 'react';
 import './DiscordLogin.css';
 
-const DiscordLogin = ({ onLogin }) => {
+const DiscordLogin = ({ onAttemptedLogin }) => {
   return (
     <button
       className='loginButton'
@@ -9,7 +9,7 @@ const DiscordLogin = ({ onLogin }) => {
         const windowWidth = 500;
         const windowHeight = 800;
 
-        const popupWindow = window.open(
+        /*const popupWindow = */window.open(
           'https://discord.com/api/oauth2/authorize?client_id=986176431690252298&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fapi%2Fauth%2Fdiscord%2Fredirect&response_type=code&scope=identify%20guilds',
           'discordAuthorizationPopup',
           `height=${windowHeight}, width=${windowWidth},
@@ -18,6 +18,12 @@ const DiscordLogin = ({ onLogin }) => {
            resizable=no, scrollbar=no, toolbar=no, menubar=no, location=no,
            directories=no, status=yes`
         );
+
+        window.addEventListener('message', event => {
+          if (event.data.type === 'discordOAuthLoggedIn') {
+            onAttemptedLogin(event.data.sessionId);
+          }
+        });
       }}
     >
       Login
