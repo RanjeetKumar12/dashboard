@@ -11,6 +11,7 @@ const App = () => {
 
       <DiscordLogin
         onLogin={sessionId => {
+          // TODO: set options for this cookie (expiry time, etc.)
           setCookie('session-id', sessionId);
         }}
       />
