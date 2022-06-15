@@ -12,6 +12,8 @@ const App = () => {
       <DiscordLogin
         onLogin={sessionId => {
           // TODO: set options for this cookie (expiry time, etc.)
+          // TODO: stop setting the cookie manually and use Set-Cookie instead
+          //       on the backend
           setCookie('session-id', sessionId);
         }}
       />
