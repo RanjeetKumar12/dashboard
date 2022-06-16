@@ -1,7 +1,6 @@
 import { useState } from 'react';
-// TODO: remove 'react-cookie' dependency
-//import { useCookies } from 'react-cookie';
 import DiscordLogin from './components/DiscordLogin';
+import DashboardWrapper from './components/DashboardWrapper';
 
 const App = () => {
   const [ loggedIn, setLoggedIn ] = useState(false);
@@ -16,9 +15,9 @@ const App = () => {
         }}
       />
 
-      {loggedIn && <p>You are logged in!</p>}
+      {loggedIn && <DashboardWrapper />}
     </div>
   );
-}
+};
 
 export default App;
