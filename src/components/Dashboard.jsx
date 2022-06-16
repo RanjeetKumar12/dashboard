@@ -1,13 +1,13 @@
 import { useQuery, gql } from '@apollo/client';
 
-const EXCHANGE_RATES = gql`
+const HELLO_WORLD = gql`
   query HelloWorld {
     hello
   }
 `;
 
 const ExchangeRates = () => {
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+  const { loading, error, data } = useQuery(HELLO_WORLD);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
