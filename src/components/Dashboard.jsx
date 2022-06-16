@@ -6,7 +6,7 @@ const HELLO_WORLD = gql`
   }
 `;
 
-const ExchangeRates = () => {
+const HelloWorld = () => {
   const { loading, error, data } = useQuery(HELLO_WORLD);
 
   if (loading) return <p>Loading...</p>;
@@ -19,7 +19,7 @@ const Dashboard = () => {
   return (
     <div>
       <p>This is the dashboard</p>
-      <ExchangeRates />
+      <HelloWorld />
     </div>
   );
 };
