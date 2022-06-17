@@ -20,6 +20,15 @@ const DiscordLogin = ({ onLogin }) => {
 
         window.addEventListener('message', event => {
           if (event.data.type === 'discordOAuthLoggedIn') {
+            const token = event.data.sessionAccessToken;
+
+            // TODO: set the domain as a variable or config somewhere
+            // this fetch sets the session-id cookie
+            fetch(
+              `http://localhost:5000/api/auth/discord/getsessionid?token=${token}`,
+              {method: 'GET', credentials: 'include'}
+            );
+
             onLogin();
           }
         });
