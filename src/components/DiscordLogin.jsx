@@ -52,11 +52,14 @@ const DiscordLogin = ({ onLogin }) => {
            directories=no, status=yes`
         );
 
-        window.addEventListener('message', event => {
+        // the callback below must be a named function not an arrow function
+        window.addEventListener('message', function messageEventListener(event) {
           if (event.data.type === 'discordOAuthLoggedIn') {
             const sessionAccessToken = event.data.sessionAccessToken;
 
             doDiscordLogin(sessionAccessToken);
+
+            this.removeEventListener('message', messageEventListener);
           }
         });
       }}
