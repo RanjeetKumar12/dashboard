@@ -3,7 +3,8 @@ import Dashboard from './Dashboard';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/api/graphql',
-  cache: new InMemoryCache()
+  cache: new InMemoryCache(),
+  credentials: 'include', // required to send cookies on every request
 });
 
 const DashboardWrapper = () => {

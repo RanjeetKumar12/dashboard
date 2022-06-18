@@ -6,7 +6,7 @@ const DiscordLogin = ({ onLogin }) => {
     // this fetch sets the session-id cookie
     fetch(
       `http://localhost:5000/api/auth/discord/getsessionid?sat=${sessionAccessToken}`,
-      {method: 'GET', credentials: 'include'}
+      {method: 'GET', credentials: 'include'} // credentials required to receive cookie
     );
 
     // TODO: set as false if the login fails
