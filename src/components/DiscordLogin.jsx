@@ -1,6 +1,37 @@
+import { useEffect } from 'react';
 import './DiscordLogin.css';
 
 const DiscordLogin = ({ onLogin }) => {
+  const doDiscordLogin = sessionAccessToken => {
+    // this fetch sets the session-id cookie
+    fetch(
+      `http://localhost:5000/api/auth/discord/getsessionid?sat=${sessionAccessToken}`,
+      {method: 'GET', credentials: 'include'}
+    );
+
+    // TODO: set as false if the login fails
+    const success = true;
+
+    if (success) {
+      onLogin();
+    } else {
+      // TODO: display an error
+    }
+  };
+
+  // TODO: fix missing dependency warning with doDiscordLogin
+  useEffect(() => {
+    // check if the session access token is already given in the url when the
+    // page loads
+    const queryParameters = new URLSearchParams(window.location.search);
+
+    const sessionAccessToken = queryParameters.get('sat');
+
+    if (sessionAccessToken) {
+      doDiscordLogin(sessionAccessToken);
+    }
+  }, []);
+
   return (
     <button
       className='loginButton'
@@ -8,7 +39,7 @@ const DiscordLogin = ({ onLogin }) => {
         const windowWidth = 500;
         const windowHeight = 800;
 
-        /*const popupWindow = */window.open(
+        window.open(
           'https://discord.com/api/oauth2/authorize?client_id=986176431690252298&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fapi%2Fauth%2Fdiscord%2Fredirect&response_type=code&scope=identify%20guilds',
           'discordAuthorizationPopup',
           `height=${windowHeight}, width=${windowWidth},
@@ -20,16 +51,9 @@ const DiscordLogin = ({ onLogin }) => {
 
         window.addEventListener('message', event => {
           if (event.data.type === 'discordOAuthLoggedIn') {
-            const token = event.data.sessionAccessToken;
+            const sessionAccessToken = event.data.sessionAccessToken;
 
-            // TODO: set the domain as a variable or config somewhere
-            // this fetch sets the session-id cookie
-            fetch(
-              `http://localhost:5000/api/auth/discord/getsessionid?token=${token}`,
-              {method: 'GET', credentials: 'include'}
-            );
-
-            onLogin();
+            doDiscordLogin(sessionAccessToken);
           }
         });
       }}
