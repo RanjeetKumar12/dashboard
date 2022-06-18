@@ -21,6 +21,9 @@ const DiscordLogin = ({ onLogin }) => {
 
   // TODO: fix missing dependency warning with doDiscordLogin
   useEffect(() => {
+    // TODO: also check if the user is already logged into a session upon
+    //       page load
+
     // check if the session access token is already given in the url when the
     // page loads
     const queryParameters = new URLSearchParams(window.location.search);
