@@ -39,6 +39,9 @@ const DiscordLogin = ({ onLogin }) => {
     <button
       className='loginButton'
       onClick={() => {
+        // TODO: make it so clicking multiple times on login button doesn't create
+        //       new event listeners
+
         const windowWidth = 500;
         const windowHeight = 800;
 
