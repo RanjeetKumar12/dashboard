@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './DiscordLogin.css';
 
 const DiscordLogin = ({ onLogin }) => {
   const [ loginError, setLoginError ] = useState(false);
 
-  const doDiscordLogin = async sessionAccessToken => {
+  const doDiscordLogin = useCallback(() => async sessionAccessToken => {
     // this fetch sets the session-id cookie
     const response = await fetch(
       `http://localhost:5000/api/auth/discord/getsessionid?sat=${sessionAccessToken}`,
@@ -23,9 +23,8 @@ const DiscordLogin = ({ onLogin }) => {
     } else {
       setLoginError(true);
     }
-  };
+  }, [onLogin]);
 
-  // TODO: fix missing dependency warning with doDiscordLogin
   useEffect(() => {
     // TODO: also check if the user is already logged into a session upon
     //       page load
@@ -39,9 +38,10 @@ const DiscordLogin = ({ onLogin }) => {
     if (sessionAccessToken) {
       doDiscordLogin(sessionAccessToken);
     }
-  }, []);
+  }, [doDiscordLogin]);
 
   useEffect(() => {
+    console.log('added');
     // event listener for messages from login popup window
 
     // the callback below must be a named function not an arrow function
@@ -52,7 +52,7 @@ const DiscordLogin = ({ onLogin }) => {
         doDiscordLogin(sessionAccessToken);
       }
     });
-  }, []);
+  }, [doDiscordLogin]);
 
   return (
     <div>
