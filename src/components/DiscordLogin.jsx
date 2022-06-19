@@ -29,9 +29,9 @@ const DiscordLogin = ({ onLogin }) => {
     // TODO: decide whether session-id cookie or url session access token
     //       should be prioritized (session-id is prioritized right now)
 
-    // check if the session-id cookie is already valid (user is logged in)
     // this function is made and called right away so that it can be async
-    const isLoggedIn = (async () => {
+    (async () => {
+      // check if the session-id cookie is already valid (user is logged in)
       const response = await fetch(
         'http://localhost:5000/api/auth/discord/isloggedin',
         {method: 'GET', credentials: 'include'}
@@ -40,26 +40,20 @@ const DiscordLogin = ({ onLogin }) => {
       const responseText = await response.text();
 
       if (responseText === 'true') {
-        return true;
-      } else if (responseText === 'false') {
-        return false;
+        onLogin();
+        return;
+      }
+
+      // check if the session access token is already given in the url when the
+      // page loads
+      const queryParameters = new URLSearchParams(window.location.search);
+
+      const sessionAccessToken = queryParameters.get('sat');
+
+      if (sessionAccessToken) {
+        doDiscordLogin(sessionAccessToken);
       }
     })();
-
-    if (isLoggedIn) {
-      onLogin(); // refer to TODO #123
-      return;
-    }
-
-    // check if the session access token is already given in the url when the
-    // page loads
-    const queryParameters = new URLSearchParams(window.location.search);
-
-    const sessionAccessToken = queryParameters.get('sat');
-
-    if (sessionAccessToken) {
-      doDiscordLogin(sessionAccessToken);
-    }
   }, [doDiscordLogin, onLogin]);
 
   useEffect(() => {
