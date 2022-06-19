@@ -4,7 +4,7 @@ import './DiscordLogin.css';
 const DiscordLogin = ({ onLogin }) => {
   const [ loginError, setLoginError ] = useState(false);
 
-  const doDiscordLogin = useCallback(() => async sessionAccessToken => {
+  const doDiscordLogin = useCallback(async sessionAccessToken => {
     // this fetch sets the session-id cookie
     const response = await fetch(
       `http://localhost:5000/api/auth/discord/getsessionid?sat=${sessionAccessToken}`,
