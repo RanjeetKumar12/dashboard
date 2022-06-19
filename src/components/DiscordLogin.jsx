@@ -26,8 +26,30 @@ const DiscordLogin = ({ onLogin }) => {
   }, [onLogin]);
 
   useEffect(() => {
-    // TODO: also check if the user is already logged into a session upon
-    //       page load
+    // TODO: decide whether session-id cookie or url session access token
+    //       should be prioritized (session-id is prioritized right now)
+
+    // check if the session-id cookie is already valid (user is logged in)
+    // this function is made and called right away so that it can be async
+    const isLoggedIn = (async () => {
+      const response = await fetch(
+        'http://localhost:5000/api/auth/discord/isloggedin',
+        {method: 'GET', credentials: 'include'}
+      );
+
+      const responseText = await response.text();
+
+      if (responseText === 'true') {
+        return true;
+      } else if (responseText === 'false') {
+        return false;
+      }
+    })();
+
+    if (isLoggedIn) {
+      onLogin(); // refer to TODO #123
+      return;
+    }
 
     // check if the session access token is already given in the url when the
     // page loads
@@ -38,20 +60,27 @@ const DiscordLogin = ({ onLogin }) => {
     if (sessionAccessToken) {
       doDiscordLogin(sessionAccessToken);
     }
-  }, [doDiscordLogin]);
+  }, [doDiscordLogin, onLogin]);
 
   useEffect(() => {
-    console.log('added');
     // event listener for messages from login popup window
 
     // the callback below must be a named function not an arrow function
-    window.addEventListener('message', function messageEventListener(event) {
+
+    const messageEventListener = event => {
       if (event.data.type === 'discordOAuthLoggedIn') {
         const sessionAccessToken = event.data.sessionAccessToken;
 
         doDiscordLogin(sessionAccessToken);
       }
-    });
+    };
+
+    window.addEventListener('message', messageEventListener);
+
+    return () => {
+      // clean up when component unmounts
+      window.removeEventListener('message', messageEventListener);
+    };
   }, [doDiscordLogin]);
 
   return (

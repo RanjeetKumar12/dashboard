@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import DiscordLogin from './components/DiscordLogin';
 import DashboardWrapper from './components/DashboardWrapper';
 
@@ -10,9 +10,9 @@ const App = () => {
       <h1>Welcome to Graveyard Dashboard! Please login to use it.</h1>
 
       <DiscordLogin
-        onLogin={() => {
+        onLogin={useCallback(() => {
           setLoggedIn(true);
-        }}
+        }, [])}
       />
 
       {loggedIn && <DashboardWrapper />}
