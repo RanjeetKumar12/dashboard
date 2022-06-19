@@ -1,18 +1,25 @@
 import { useQuery, gql } from '@apollo/client';
 
-const HELLO_WORLD = gql`
-  query HelloWorld {
-    hello
+const GET_USER = gql`
+  query GetUser {
+    user {
+      id
+      username
+      discriminator
+      avatar
+      banner
+      accentColor
+    }
   }
 `;
 
 const HelloWorld = () => {
-  const { loading, error, data } = useQuery(HELLO_WORLD);
+  const { loading, error, data } = useQuery(GET_USER);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
 
-  return <p>{data.hello}</p>;
+  return <p>{data.user.username}#{data.user.discriminator}</p>;
 };
 
 const Dashboard = () => {
