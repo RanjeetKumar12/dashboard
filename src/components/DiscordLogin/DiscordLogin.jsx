@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import './DiscordLogin.css';
+import styles from './DiscordLogin.module.css';
 
 const DiscordLogin = ({ onLogin }) => {
   const [ loginError, setLoginError ] = useState(false);
@@ -80,7 +80,7 @@ const DiscordLogin = ({ onLogin }) => {
   return (
     <div>
       <button
-        className='loginButton'
+        className={styles.loginButton}
         onClick={() => {
           setLoginError(false); // remove any error message
 

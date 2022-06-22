@@ -1,6 +1,7 @@
 // Cookie notification required for EU users
 
 import { useState } from 'react';
+import styles from './CookieMessage.module.css';
 
 const CookieMessage = () => {
   const [ hidden, setHidden ] = useState(false);
@@ -8,12 +9,7 @@ const CookieMessage = () => {
   if (hidden) return null;
 
   return (
-    <div style={{
-      width: '100%',
-      position: 'fixed',
-      color: 'blue',
-      bottom: 0,
-    }}>
+    <div className={styles.container}>
       <p>This website uses essential cookies.</p>
 
       <button
