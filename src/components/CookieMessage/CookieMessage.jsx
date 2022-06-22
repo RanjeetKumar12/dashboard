@@ -1,12 +1,19 @@
 // Cookie notification required for EU users
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './CookieMessage.module.css';
 
 const CookieMessage = () => {
-  const [ clickedOk, setClickedOk ] = useState(false);
+  const [ hidCookieMessage, setHidCookieMessage ] = useState(
+    // double negation since the value could be null (not set)
+    !!JSON.parse(localStorage.getItem('hidCookieMessage'))
+  );
 
-  if (clickedOk) return null;
+  useEffect(() => {
+    localStorage.setItem('hidCookieMessage', JSON.stringify(hidCookieMessage));
+  }, [hidCookieMessage])
+
+  if (hidCookieMessage) return null;
 
   return (
     <div className={styles.container}>
@@ -14,7 +21,7 @@ const CookieMessage = () => {
 
       <button
         onClick={() => {
-          setClickedOk(true);
+          setHidCookieMessage(true);
         }}
       >
         OK
