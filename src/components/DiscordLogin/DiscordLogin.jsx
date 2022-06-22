@@ -37,9 +37,10 @@ const DiscordLogin = ({ onLogin }) => {
         {method: 'GET', credentials: 'include'}
       );
 
-      const responseText = await response.text();
+      // response.text() is either 'true' or 'false'
+      const isLoggedIn = JSON.parse(await response.text());
 
-      if (responseText === 'true') {
+      if (isLoggedIn) {
         onLogin();
         return;
       }
