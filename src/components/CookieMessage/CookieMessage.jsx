@@ -4,9 +4,9 @@ import { useState } from 'react';
 import styles from './CookieMessage.module.css';
 
 const CookieMessage = () => {
-  const [ hidden, setHidden ] = useState(false);
+  const [ clickedOk, setClickedOk ] = useState(false);
 
-  if (hidden) return null;
+  if (clickedOk) return null;
 
   return (
     <div className={styles.container}>
@@ -14,7 +14,7 @@ const CookieMessage = () => {
 
       <button
         onClick={() => {
-          setHidden(true);
+          setClickedOk(true);
         }}
       >
         OK
