@@ -13,7 +13,7 @@ const GET_USER = gql`
   }
 `;
 
-const HelloWorld = () => {
+const UserProfile = () => {
   const { loading, error, data } = useQuery(GET_USER);
 
   if (loading) return <p>Loading...</p>;
@@ -22,13 +22,4 @@ const HelloWorld = () => {
   return <p>{data.user.username}#{data.user.discriminator}</p>;
 };
 
-const Dashboard = () => {
-  return (
-    <div>
-      <p>This is the dashboard</p>
-      <HelloWorld />
-    </div>
-  );
-};
-
-export default Dashboard;
+export default UserProfile;

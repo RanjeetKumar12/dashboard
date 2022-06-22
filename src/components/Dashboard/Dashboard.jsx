@@ -1,5 +1,7 @@
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import Dashboard from './Dashboard';
+
+import UserGuilds from './UserGuilds';
+import UserProfile from './UserProfile';
 
 const client = new ApolloClient({
   uri: 'http://localhost:5000/api/graphql',
@@ -7,12 +9,14 @@ const client = new ApolloClient({
   credentials: 'include', // required to send cookies on every request
 });
 
-const DashboardWrapper = () => {
+const Dashboard = () => {
   return (
     <ApolloProvider client={client}>
-      <Dashboard />
+      <p>This is the dashboard</p>
+      <UserProfile />
+      <UserGuilds />
     </ApolloProvider>
   );
 };
 
-export default DashboardWrapper;
+export default Dashboard;

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import DiscordLogin from './components/DiscordLogin';
-import DashboardWrapper from './components/DashboardWrapper';
+import Dashboard from './components/Dashboard';
 
 const App = () => {
   const [ loggedIn, setLoggedIn ] = useState(false);
@@ -15,7 +15,7 @@ const App = () => {
 
       {!loggedIn && <DiscordLogin onLogin={onLoginCallback} />}
 
-      {loggedIn && <DashboardWrapper />}
+      {loggedIn && <Dashboard />}
     </div>
   );
 };
