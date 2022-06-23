@@ -88,12 +88,28 @@ const DiscordLogin = ({ onLogin }) => {
           const windowWidth = 500;
           const windowHeight = 800;
 
+          // NOTE: make sure the redirect is set up in the discord application
+          const parameters = new URLSearchParams({
+            client_id: process.env.REACT_APP_CLIENT_ID,
+            redirect_uri: (
+              `${process.env.REACT_APP_DASHBOARD_API}/api/auth/discord/redirect`
+            ),
+            response_type: 'code',
+            scope: 'identify guilds',
+          });
+
           window.open(
-            `https://discord.com/api/oauth2/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_DASHBOARD_API}/api/auth/discord/redirect&response_type=code&scope=identify guilds`,
+            `https://discord.com/api/oauth2/authorize?${parameters}`,
             'discordAuthorizationPopup',
             `height=${windowHeight}, width=${windowWidth},
-             left=${window.screen.width ? (window.screen.width - windowWidth) / 2 : 0},
-             top=${window.screen.height ? (window.screen.height - windowHeight) / 2 : 0},
+             left=${
+                     window.screen.width
+                       ? (window.screen.width - windowWidth) / 2 : 0
+                   },
+             top=${
+                    window.screen.height
+                      ? (window.screen.height - windowHeight) / 2 : 0
+                  },
              resizable=no, scrollbar=no, toolbar=no, menubar=no, location=no,
              directories=no, status=yes`
           );
