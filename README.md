@@ -12,12 +12,15 @@ Install dependencies:
 npm install
 ```
 
+Setup the [backend server](https://github.com/Graveyard-Dev/graveyard-dashboard-api).
+
 Edit the environment variables in `.env`:
 
 | VARIABLE | DESCRIPTION |
 | :-- | :-- |
 | `REACT_APP_DASHBOARD_API` | The backend API server or [proxy server](https://github.com/Graveyard-Dev/graveyard-dashboard-proxy) URL. |
 | `REACT_APP_CLIENT_ID` | The Discord application's client ID. |
+
 
 ## Run the app locally
 
