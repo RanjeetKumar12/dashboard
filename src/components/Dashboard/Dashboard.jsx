@@ -4,7 +4,7 @@ import UserGuilds from './UserGuilds';
 import UserProfile from './UserProfile';
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5000/api/graphql',
+  uri: `${process.env.REACT_APP_DASHBOARD_API}/api/graphql`,
   cache: new InMemoryCache(),
   credentials: 'include', // required to send cookies on every request
 });

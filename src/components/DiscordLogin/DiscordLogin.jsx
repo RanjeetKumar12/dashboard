@@ -7,7 +7,7 @@ const DiscordLogin = ({ onLogin }) => {
   const doDiscordLogin = useCallback(async sessionAccessToken => {
     // this fetch sets the session-id cookie
     const response = await fetch(
-      `http://localhost:5000/api/auth/discord/getsessionid?sat=${sessionAccessToken}`,
+      `${process.env.REACT_APP_DASHBOARD_API}/api/auth/discord/getsessionid?sat=${sessionAccessToken}`,
       {method: 'GET', credentials: 'include'} // credentials required to receive cookie
     );
 
@@ -33,7 +33,7 @@ const DiscordLogin = ({ onLogin }) => {
     (async () => {
       // check if the session-id cookie is already valid (user is logged in)
       const response = await fetch(
-        'http://localhost:5000/api/auth/discord/isloggedin',
+        `${process.env.REACT_APP_DASHBOARD_API}/api/auth/discord/isloggedin`,
         {method: 'GET', credentials: 'include'}
       );
 
@@ -89,7 +89,7 @@ const DiscordLogin = ({ onLogin }) => {
           const windowHeight = 800;
 
           window.open(
-            'https://discord.com/api/oauth2/authorize?client_id=986176431690252298&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2Fapi%2Fauth%2Fdiscord%2Fredirect&response_type=code&scope=identify%20guilds',
+            `https://discord.com/api/oauth2/authorize?client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_DASHBOARD_API}/api/auth/discord/redirect&response_type=code&scope=identify guilds`,
             'discordAuthorizationPopup',
             `height=${windowHeight}, width=${windowWidth},
              left=${window.screen.width ? (window.screen.width - windowWidth) / 2 : 0},
