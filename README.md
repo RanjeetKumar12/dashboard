@@ -21,6 +21,9 @@ Edit the environment variables in `.env`:
 | `REACT_APP_DASHBOARD_API` | The backend API server or [proxy server](https://github.com/Graveyard-Dev/graveyard-dashboard-proxy) URL. |
 | `REACT_APP_CLIENT_ID` | The Discord application's client ID. |
 
+## Setup the proxy
+
+If using the [proxy server](https://github.com/Graveyard-Dev/graveyard-dashboard-proxy), change the `REACT_APP_DASHBOARD_API` environment variable to the URL of the proxy server.
 
 ## Run the app locally
 
