@@ -14,7 +14,7 @@ npm install
 
 Setup the [backend server](https://github.com/Graveyard-Dev/graveyard-dashboard-api).
 
-Edit the environment variables in `.env`:
+Edit the environment variables in `.env` (see `example.env` for an example):
 
 | VARIABLE | DESCRIPTION |
 | :-- | :-- |
