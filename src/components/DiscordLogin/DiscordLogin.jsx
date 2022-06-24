@@ -18,41 +18,51 @@ const DiscordLogin = ({ onLogin }) => {
       success = false;
     }
 
-    if (success) {
-      onLogin();
-    } else {
-      setLoginError(true);
-    }
-  }, [onLogin]);
+    return success;
+  }, []);
 
   useEffect(() => {
-    // TODO: decide whether session-id cookie or url session access token
-    //       should be prioritized (session-id is prioritized right now)
-
     // this function is made and called right away so that it can be async
     (async () => {
-      // check if the session-id cookie is already valid (user is logged in)
+      // First, check if the session access token is given in the URL
+      // (this happens when the user opened the discord oauth url themselves)
+      const queryParameters = new URLSearchParams(window.location.search);
+
+      const sessionAccessToken = queryParameters.get('sat');
+
+      // whether it should bother checking if the user is already logged in
+      let doSessionIdCheck = true;
+
+      if (sessionAccessToken) {
+        const success = await doDiscordLogin(sessionAccessToken);
+        
+        if (success) {
+          setLoginError(false);
+          onLogin();
+
+          // since a new session was created, no need to check the session id
+          doSessionIdCheck = false; 
+        } else {
+          setLoginError(true);
+        }
+      }
+
+      if (!doSessionIdCheck) return;
+
+      // Otherwise, check if the session-id cookie is already valid (user is
+      // logged in)
       const response = await fetch(
         `${process.env.REACT_APP_DASHBOARD_API}/api/auth/discord/isloggedin`,
         {method: 'GET', credentials: 'include'}
       );
 
-      // response.text() is either 'true' or 'false'
+      // response.text() is either 'true' or 'false', depending on if the
+      // session-id is valid
       const isLoggedIn = JSON.parse(await response.text());
 
       if (isLoggedIn) {
+        setLoginError(false);
         onLogin();
-        return;
-      }
-
-      // check if the session access token is already given in the url when the
-      // page loads
-      const queryParameters = new URLSearchParams(window.location.search);
-
-      const sessionAccessToken = queryParameters.get('sat');
-
-      if (sessionAccessToken) {
-        doDiscordLogin(sessionAccessToken);
       }
     })();
   }, [doDiscordLogin, onLogin]);
@@ -60,13 +70,18 @@ const DiscordLogin = ({ onLogin }) => {
   useEffect(() => {
     // event listener for messages from login popup window
 
-    // the callback below must be a named function not an arrow function
-
-    const messageEventListener = event => {
+    const messageEventListener = async event => {
       if (event.data.type === 'discordOAuthLoggedIn') {
         const sessionAccessToken = event.data.sessionAccessToken;
 
-        doDiscordLogin(sessionAccessToken);
+        const success = await doDiscordLogin(sessionAccessToken);
+
+        if (success) {
+          setLoginError(false);
+          onLogin();
+        } else {
+          setLoginError(true);
+        }
       }
     };
 
@@ -76,7 +91,7 @@ const DiscordLogin = ({ onLogin }) => {
       // clean up when component unmounts
       window.removeEventListener('message', messageEventListener);
     };
-  }, [doDiscordLogin]);
+  }, [doDiscordLogin, onLogin]);
 
   return (
     <div>
