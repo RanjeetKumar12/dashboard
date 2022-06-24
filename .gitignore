@@ -25,3 +25,6 @@ yarn-error.log*
 # vim
 *.swo
 *.swp
+
+# environment variables
+.env
