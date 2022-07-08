@@ -1,0 +1,31 @@
+$sidebar-bg-color: #f2f7fa;
+$sidebar-color: #7d7e83;
+$highlight-color: #2a3038;
+
+@import "~react-pro-sidebar/dist/scss/styles.scss";
+
+#header {
+    position: absolute;
+}
+
+#header .pro-sidebar {
+    height: 100vh;
+}
+
+#header .pro-sidebar-inner {
+    background-color: #fee2f8;
+    background-image: linear-gradient(315deg, #fee2f8 0%, #dcf8ef 74%);
+    box-shadow: 0.5px 0.866px 2px 0px rgba(0, 0, 0, 0.15);
+    
+}
+
+#header .pro-sidebar-inner .pro-sidebar-layout {
+    overflow-y: hidden;
+}
+
+#header .pro-sidebar-inner .pro-sidebar-layout ul .pro-inner-item {
+    font-weight: bold;
+}
+
+
+
